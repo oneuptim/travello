@@ -1,0 +1,53 @@
+{% load staticfiles %}
+{% load fontawesome %}
+<!Doctype html>
+<html>
+<head>
+   <title>Travello</title>
+   <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+   <script src="https://use.typekit.net/iii7xtz.js"></script>
+   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+   {% fontawesome_stylesheet %}
+</head>
+  <body>
+    <div id="wrapper">
+      <div class="logo">Travello</div>
+        <div class="left-col">
+          <hr>
+        <!-- checking messages with flash -->
+        {% if messages %}
+        <ul class="messages">
+          {% for msg in messages %}
+          <li>
+          <div >
+          {{msg}}
+          </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
+        <h3>Registration</h3>
+        <form action="/register_process" method="post">
+          {% csrf_token %}
+      		<input type="text" name="first_name" placeholder="First Name"><br>
+          <input type="text" name="last_name" placeholder="Last Name"><br>
+          <input type="text" name="email" placeholder="Email"><br>
+          <input type="password" name="password" placeholder="Password"><br>
+          <input type="password" name="confirm_password" placeholder="Confirm Password"><br>
+      		<input type="submit" value="Register">
+        </form>
+      </div>
+      <div class="right-col">
+        <br>
+        <hr>
+        <h3>Login</h3>
+        <form action="/login_process" method="post">
+          {% csrf_token %}
+          <input type="text" name="email" placeholder="Email"><br>
+          <input type="password" name="password" placeholder="Password"><br>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+    </body>
+</html>

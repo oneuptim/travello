@@ -1,0 +1,86 @@
+{% load staticfiles %}
+{% load fontawesome %}
+<!Doctype html>
+<html>
+<head>
+   <title>Travello</title>
+   <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+   <script src="https://use.typekit.net/iii7xtz.js"></script>
+   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+   {% fontawesome_stylesheet %}
+</head>
+  <body>
+    <div id="wrapper">
+      <div class="logo">
+          Travello
+      </div>
+    <div class="left-col">
+      <hr>
+      {% if not trip in all_trips %}
+      <h1> Explore Destinations </h1>
+      {% else %}
+      <h1> No Destinations </h1>
+      {% endif %}
+
+      <!-- all_trips trip.id is in joined_trips trips.id -->
+
+      {% for trip in all_trips %}
+      {% if trip not in just_joined %}
+      <a href="/destination/{{trip.id}}">
+      <img  src="../static/myapp/img/vacation.jpg">
+      </a>
+      <div class="quotes">
+        <h2>{{ trip.destination }}</h2
+        <p>{{ trip.description }} </p>
+        By <a href="/user/{{trip.participant.id}}">
+        {{ trip.participant.first_name }} {{ trip.participant.last_name }} </a> • Start Date: {{ trip.start_date }} • End: {{ trip.end_date }} • Trip ID {{ trip.id }}</p>
+        <h3><a href="/join_trip/{{trip.id}}">{% fontawesome_icon 'heart' color='#4caf50' %} Join this Trip</a></h3>
+      </div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+
+    <div class="right-col">
+      <div class="menu">
+      <h3>Hi, {{ loggedInUser.first_name.title }}! | <a href="/success">Dashboard<a/> | <a href="/new_trip">Add Trip<a/> | <a href= "/logout">{% fontawesome_icon 'lock' color='#4caf50' %} Logout</a></h3><br>
+    </div>
+      <hr>
+      {% if not schedule in schedule %}
+      <h3>My Travel Schedule</h3>
+      {% else %}
+      <h3>No travel schedule</h3>
+      <p><a href="/new_trip">Add Trip</a></p>
+      {% endif %}
+      {% for schedule in schedule %}
+      <div class="fav_quotes">
+        <h3><a href="/destination/{{schedule.id}}"> {{ schedule.destination }}</a> </h3>
+        <p>{{ schedule.description }}</p>
+        <hr>
+        <p><b>Starts</b> {{ schedule.start_date }} <br> <b>Ends</b> {{ schedule.end_date }}</p>
+        <p>Posted by <a href="/user/{{ schedule.participant.id }}">{{ schedule.participant.first_name }} {{ schedule.participant.last_name }}</a></p>
+      </div>
+      {%  endfor %}
+
+      <hr>
+      {% if not trip in joined_trips %}
+      <h3>Trips I joined</h3>
+      {% else %}
+      <p>Trips you join will appear here</p>
+      {% endif %}
+      {% for trip in joined_trips %}
+      <div class="fav_quotes">
+        <h3><a href="/destination/{{trip.trip.id}}"> {{ trip.trip.destination }}</a> </h3>
+        <p>{{ trip.trip.description}}</p>
+        <p><b>Starts</b> {{ trip.trip.start_date }} <br> <b>Ends</b> {{ trip.trip.end_date }} </p>
+        <p>Posted by <a href="/user/{{ trip.participant.id }}">{{ trip.participant.first_name }} {{ trip.participant.last_name }} </a></p>
+        <hr>
+        <h3><a href="/unjoin_trip/{{ trip.id }}" style="color: #ff0000;"> {% fontawesome_icon 'trash' color='#ff0000' %} Unjoin this Trip</a></h3>
+      </div>
+      {% endfor %}
+
+    </div>
+    </div>
+    <!-- End wrapper -->
+  </body>
+</html>

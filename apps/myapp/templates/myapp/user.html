@@ -1,0 +1,51 @@
+{% load staticfiles %}
+{% load fontawesome %}
+<!Doctype html>
+<html>
+<head>
+   <title>Trip Destination</title>
+   <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+   <script src="https://use.typekit.net/iii7xtz.js"></script>
+   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+   {% fontawesome_stylesheet %}
+    </head>
+    <body>
+      <div id="wrapper">
+        <div class="logo">
+            Travello
+        </div>
+      <div class="left-col">
+        <hr>
+        <h1>{{ user.first_name }}'s Trips</h1>
+        {% for trip in user_trips %}
+        <a href="/destination/{{trip.id}}">
+        <img  src="../static/myapp/img/vacation.jpg">
+        </a>
+        <div class="quotes">
+          <h2>{{ trip.destination }}</h2
+          <p>{{ trip.description }} </p>
+          By <a href="/user/{{trip.participant.id}}">
+          {{ trip.participant.first_name }} {{ trip.participant.last_name }} </a> • Start Date: {{ trip.start_date }} • End: {{ trip.end_date }} • Trip ID {{ trip.id }}</p>
+          <h3><a href="/join_trip/{{trip.id}}">{% fontawesome_icon 'heart' color='#4caf50' %} Join this Trip</a></h3>
+        </div>
+        {% endfor %}
+        </div>
+
+        <div class="right-col">
+          <div class="menu">
+          <h3>Hi, {{ loggedInUser.first_name.title }}! | <a href="/success">Dashboard<a/> | <a href="/new_trip">Add Trip<a/> | <a href= "/logout">{% fontawesome_icon 'lock' color='#4caf50' %} Logout</a></h3><br>
+        </div>
+          <!-- <hr> -->
+          <img  class="profile-pic" src="../static/myapp/img/profile-pic.png">
+          <div class="quotes">
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p>{% fontawesome_icon 'envelope' color='#fff' %} {{user.email }}</p>
+            <strong>Bio</strong>
+            <p>
+              It feels good to be back in a queen! Friday night. I just haven't had sex in a month. You know, you've been here two months. It's hard to gauge time. She tried pesto for the first time. Imagine that, 92 years old and she never tried pesto.
+            </p>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>

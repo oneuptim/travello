@@ -1,0 +1,53 @@
+{% load staticfiles %}
+{% load fontawesome %}
+<!Doctype html>
+<html>
+<head>
+   <title>Travello</title>
+   <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+   <script src="https://use.typekit.net/iii7xtz.js"></script>
+   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+   {% fontawesome_stylesheet %}
+    </head>
+    <body>
+      <div id="wrapper">
+        <div class="logo">
+            Travello
+        </div>
+      <div class="left-col">
+        <hr>
+        <h1>{{destination.destination}} </h1>
+      <img src="../static/myapp/img/vacation.jpg">
+        <div class="quotes">
+          <p> Description:  {{destination.description}} </p>
+          <p> Start Date:{{destination.start_date}} </p>
+          <p> End Date: {{destination.end_date}} </p>
+          <p> Trip Planner: <a href="/user/{{ destination.participant.id }}">{{ destination.participant.first_name }} {{ destination.participant.last_name }}</a></p>
+        </div>
+        <h3>Trip Participants</h3>
+        {% for participant in participants %}
+          <p>{{ participant.participant.first_name }} {{ participant.participant.last_name }}</p>
+        {% endfor %}
+        </div>
+
+        <div class="right-col">
+          <div class="menu">
+          <h3>Hi, {{ loggedInUser.first_name.title }}! | <a href="/success">Dashboard<a/> | <a href="/new_trip">Add Trip<a/> | <a href= "/logout">{% fontawesome_icon 'lock' color='#4caf50' %} Logout</a></h3><br>
+        </div>
+          <hr>
+          <h3>Trip Notes</h3>
+          {% for trip in joined_trips %}
+          <p>TRIP ID {{ trip.trip.id }}</p>
+          <div class="fav_quotes">
+            <p>{{ trip.participant.first_name }} {{ trip.participant.last_name }} <a href="/destination/{{trip.trip.id}}"> {{ trip.trip.destination }}</a> {{ trip.trip.start_date }} {{ trip.trip..end_date }} {{ trip.trip.description}} Participant ID: {{ trip.participant.id }} </p>
+          </div>
+          {% endfor %}
+        </div>
+
+
+
+
+
+      </div>
+    </body>
+</html>
