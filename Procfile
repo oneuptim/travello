@@ -1,1 +1,1 @@
-web: gunicorn exam.wsg
+web: gunicorn exam.wsgi -b 0.0.0.0:$PORT
