@@ -1,1 +1,1 @@
-web: gunicorn myapp.wsg
+web: gunicorn exam.wsg
