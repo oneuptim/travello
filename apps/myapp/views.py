@@ -73,9 +73,11 @@ def success(request):
 
 		schedule = Trip.objects.filter(participant_id=session).order_by('-created_at')
 		joined_trips = Schedule.objects.filter(participant_id=session).order_by('-created_at')
+
 		just_joined_trips = []
 		for trip in joined_trips:
 			just_joined_trips.append(trip.trip)
+
 		all_trips = Trip.objects.exclude(participant_id=session).order_by('-created_at')
 
 		for trip in all_trips: # Trip table
@@ -87,25 +89,6 @@ def success(request):
 					all_trips_minus_joined_trips = Trip.objects.filter(id = trip.trip.id).order_by('-created_at')
 
 			print trip.id, "@"*100
-
-
-
-
-
-		# print all_trips_minus_joined_trips, "#"*100
-
-		# all_trips = Trip.objects.exclude(tripschedule__participant_id=session)
-
-
-
-		# res = Quote.objects.all().exclude(favoritequote__user__id=session).order_by('-created_at')
-        # favQuoteList = Favorite.objects.all().order_by('-created_at').filter(user_id=session)
-
-		# Exclude if all_trips trip.id is in joined_trips trips.id
-
-		# created_at, id, participant, participant_id, trip, trip_id, updated_at
-		# print joined_trips[0].trip.id, "*"*100
-
 
 		context = {
 
